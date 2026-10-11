@@ -1,0 +1,284 @@
+[[settings]]
+description = ""
+title = "General"
+type = "header"
+uniqueID = "headerGeneral"
+
+[[settings]]
+description = "When the overlay is shown: during gameplay only, also on the results screen, or always"
+options = [
+    "gameplay",
+    "gameplay + results",
+    "always",
+]
+title = "Visibility"
+type = "options"
+uniqueID = "visibility"
+value = "gameplay"
+
+[[settings]]
+description = "auto follows the osu!mania skin/setting scroll direction; up and down override it for every mode"
+options = [
+    "auto",
+    "up",
+    "down",
+]
+title = "Scroll direction"
+type = "options"
+uniqueID = "scrollDirection"
+value = "auto"
+
+[[settings]]
+description = "auto uses the game's mania scroll speed; otherwise 1-40 on the osu! scroll speed scale (constant real-time speed, independent of DT/HT)"
+options = ""
+title = "Scroll speed"
+type = "text"
+uniqueID = "scrollSpeed"
+value = "auto"
+
+[[settings]]
+description = "auto adds lazer's universal audio offset (scaled by the playback rate) so presses line up with notes; a number overrides it in gameplay milliseconds"
+options = ""
+title = "Input offset (ms)"
+type = "text"
+uniqueID = "inputOffset"
+value = "auto"
+
+[[settings]]
+description = "Notes and presses lose opacity as they approach the far edge"
+options = ""
+title = "Fade out notes and presses"
+type = "checkbox"
+uniqueID = "fade"
+value = true
+
+[[settings]]
+description = "EZ2ON-style key boxes with key names and press counts at the judgement edge"
+options = ""
+title = "Show keys"
+type = "checkbox"
+uniqueID = "showKeys"
+value = true
+
+[[settings]]
+description = "Draw the map's elapsed notes under the presses in mania: native maps and osu!standard converts, including key mods, Dual Stages, Hold Off, Invert, Mirror and lazer Random (stable Random has no readable seed, so it shows presses only)"
+options = ""
+title = "Show notes (mania)"
+type = "checkbox"
+uniqueID = "showNotes"
+value = true
+
+[[settings]]
+description = "Lanes shrink to fit the overlay width but never grow past this"
+options = ""
+title = "Maximum lane width (px)"
+type = "number"
+uniqueID = "maxLaneWidth"
+value = 64
+
+[[settings]]
+description = "webgl2 (default) renders everywhere; webgpu tries WebGPU first and falls back to WebGL2 when it is unavailable or reports errors (WebGPU canvases currently fail inside vosulay on NVIDIA/Linux)"
+options = [
+    "webgl2",
+    "webgpu",
+]
+title = "Renderer"
+type = "options"
+uniqueID = "renderer"
+value = "webgl2"
+
+[[settings]]
+description = ""
+title = "Mania colors (space separated RRGGBBAA hex values, one per lane)"
+type = "header"
+uniqueID = "headerManiaColors"
+
+[[settings]]
+description = "Note color per lane for 1K, left to right. Key counts above 10K combine the two halves' settings."
+options = ""
+title = "[mania] 1K note colors"
+type = "text"
+uniqueID = "maniaNoteColors1K"
+value = "F4F2FFFF"
+
+[[settings]]
+description = "Press color per lane for 1K, left to right"
+options = ""
+title = "[mania] 1K hit colors"
+type = "text"
+uniqueID = "maniaHitColors1K"
+value = "FF5FAEFF"
+
+[[settings]]
+description = "Note color per lane for 2K, left to right. Key counts above 10K combine the two halves' settings."
+options = ""
+title = "[mania] 2K note colors"
+type = "text"
+uniqueID = "maniaNoteColors2K"
+value = "F4F2FFFF F4F2FFFF"
+
+[[settings]]
+description = "Press color per lane for 2K, left to right"
+options = ""
+title = "[mania] 2K hit colors"
+type = "text"
+uniqueID = "maniaHitColors2K"
+value = "FF5FAEFF FF5FAEFF"
+
+[[settings]]
+description = "Note color per lane for 3K, left to right. Key counts above 10K combine the two halves' settings."
+options = ""
+title = "[mania] 3K note colors"
+type = "text"
+uniqueID = "maniaNoteColors3K"
+value = "F4F2FFFF 3FCBFFFF F4F2FFFF"
+
+[[settings]]
+description = "Press color per lane for 3K, left to right"
+options = ""
+title = "[mania] 3K hit colors"
+type = "text"
+uniqueID = "maniaHitColors3K"
+value = "FF5FAEFF FF9B3DFF FF5FAEFF"
+
+[[settings]]
+description = "Note color per lane for 4K, left to right. Key counts above 10K combine the two halves' settings."
+options = ""
+title = "[mania] 4K note colors"
+type = "text"
+uniqueID = "maniaNoteColors4K"
+value = "F4F2FFFF 3FCBFFFF 3FCBFFFF F4F2FFFF"
+
+[[settings]]
+description = "Press color per lane for 4K, left to right"
+options = ""
+title = "[mania] 4K hit colors"
+type = "text"
+uniqueID = "maniaHitColors4K"
+value = "FF5FAEFF FF9B3DFF FF9B3DFF FF5FAEFF"
+
+[[settings]]
+description = "Note color per lane for 5K, left to right. Key counts above 10K combine the two halves' settings."
+options = ""
+title = "[mania] 5K note colors"
+type = "text"
+uniqueID = "maniaNoteColors5K"
+value = "F4F2FFFF 3FCBFFFF FFD53DFF 3FCBFFFF F4F2FFFF"
+
+[[settings]]
+description = "Press color per lane for 5K, left to right"
+options = ""
+title = "[mania] 5K hit colors"
+type = "text"
+uniqueID = "maniaHitColors5K"
+value = "FF5FAEFF FF9B3DFF A66BFFFF FF9B3DFF FF5FAEFF"
+
+[[settings]]
+description = "Note color per lane for 6K, left to right. Key counts above 10K combine the two halves' settings."
+options = ""
+title = "[mania] 6K note colors"
+type = "text"
+uniqueID = "maniaNoteColors6K"
+value = "F4F2FFFF 3FCBFFFF FFD53DFF FFD53DFF 3FCBFFFF F4F2FFFF"
+
+[[settings]]
+description = "Press color per lane for 6K, left to right"
+options = ""
+title = "[mania] 6K hit colors"
+type = "text"
+uniqueID = "maniaHitColors6K"
+value = "FF5FAEFF FF9B3DFF A66BFFFF A66BFFFF FF9B3DFF FF5FAEFF"
+
+[[settings]]
+description = "Note color per lane for 7K, left to right. Key counts above 10K combine the two halves' settings."
+options = ""
+title = "[mania] 7K note colors"
+type = "text"
+uniqueID = "maniaNoteColors7K"
+value = "F4F2FFFF 3FCBFFFF F4F2FFFF FFD53DFF F4F2FFFF 3FCBFFFF F4F2FFFF"
+
+[[settings]]
+description = "Press color per lane for 7K, left to right"
+options = ""
+title = "[mania] 7K hit colors"
+type = "text"
+uniqueID = "maniaHitColors7K"
+value = "FF5FAEFF FF9B3DFF FF5FAEFF A66BFFFF FF5FAEFF FF9B3DFF FF5FAEFF"
+
+[[settings]]
+description = "Note color per lane for 8K, left to right. Key counts above 10K combine the two halves' settings."
+options = ""
+title = "[mania] 8K note colors"
+type = "text"
+uniqueID = "maniaNoteColors8K"
+value = "FF4B5CFF F4F2FFFF 3FCBFFFF F4F2FFFF FFD53DFF F4F2FFFF 3FCBFFFF F4F2FFFF"
+
+[[settings]]
+description = "Press color per lane for 8K, left to right"
+options = ""
+title = "[mania] 8K hit colors"
+type = "text"
+uniqueID = "maniaHitColors8K"
+value = "4DA3FFFF FF5FAEFF FF9B3DFF FF5FAEFF A66BFFFF FF5FAEFF FF9B3DFF FF5FAEFF"
+
+[[settings]]
+description = "Note color per lane for 9K, left to right. Key counts above 10K combine the two halves' settings."
+options = ""
+title = "[mania] 9K note colors"
+type = "text"
+uniqueID = "maniaNoteColors9K"
+value = "FF4B5CFF F4F2FFFF 3FCBFFFF F4F2FFFF FFD53DFF F4F2FFFF 3FCBFFFF F4F2FFFF FF4B5CFF"
+
+[[settings]]
+description = "Press color per lane for 9K, left to right"
+options = ""
+title = "[mania] 9K hit colors"
+type = "text"
+uniqueID = "maniaHitColors9K"
+value = "4DA3FFFF FF5FAEFF FF9B3DFF FF5FAEFF A66BFFFF FF5FAEFF FF9B3DFF FF5FAEFF 4DA3FFFF"
+
+[[settings]]
+description = "Note color per lane for 10K, left to right. Key counts above 10K combine the two halves' settings."
+options = ""
+title = "[mania] 10K note colors"
+type = "text"
+uniqueID = "maniaNoteColors10K"
+value = "FF4B5CFF F4F2FFFF 3FCBFFFF F4F2FFFF FFD53DFF 4FE08AFF F4F2FFFF 3FCBFFFF F4F2FFFF FF4B5CFF"
+
+[[settings]]
+description = "Press color per lane for 10K, left to right"
+options = ""
+title = "[mania] 10K hit colors"
+type = "text"
+uniqueID = "maniaHitColors10K"
+value = "4DA3FFFF FF5FAEFF FF9B3DFF FF5FAEFF A66BFFFF FFFFFFFF FF5FAEFF FF9B3DFF FF5FAEFF 4DA3FFFF"
+
+[[settings]]
+description = ""
+title = "Other modes (space separated RRGGBBAA hex values, one per key)"
+type = "header"
+uniqueID = "headerOtherColors"
+
+[[settings]]
+description = "Press colors for K1 K2 M1 M2 on stable, or Left, Right, Smoke on lazer"
+options = ""
+title = "[standard] K1 K2 M1 M2 hit colors"
+type = "text"
+uniqueID = "standardHitColors"
+value = "FF5FAEFF 4DA3FFFF A66BFFFF FF9B3DFF"
+
+[[settings]]
+description = "Press colors for left rim, left centre, right centre, right rim"
+options = ""
+title = "[taiko] Kat Don Don Kat hit colors"
+type = "text"
+uniqueID = "taikoHitColors"
+value = "4DA3FFFF FF5FAEFF FF5FAEFF 4DA3FFFF"
+
+[[settings]]
+description = "Press colors for left, right and dash"
+options = ""
+title = "[catch] Left Right Dash hit colors"
+type = "text"
+uniqueID = "catchHitColors"
+value = "FF5FAEFF 4DA3FFFF A66BFFFF"

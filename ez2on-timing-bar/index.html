@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EZ2ON Timing Bar</title>
+    <link rel="stylesheet" href="styles/theme.css" />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <main class="timing is-hidden" data-root>
+      <div class="meter">
+        <span class="side-label">EARLY</span>
+        <div class="bar" data-bar>
+          <div class="ruler"></div>
+          <div class="hits" data-hits></div>
+          <div class="center"></div>
+          <div class="average" data-average></div>
+        </div>
+        <span class="side-label">LATE</span>
+      </div>
+      <div class="callouts" data-callouts>
+        <span class="callout early" data-early>EARLY</span>
+        <span class="callout late" data-late>LATE</span>
+      </div>
+    </main>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>

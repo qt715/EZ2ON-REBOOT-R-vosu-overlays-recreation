@@ -1,0 +1,287 @@
+[
+  {
+    "uniqueID": "headerGeneral",
+    "type": "header",
+    "title": "General",
+    "description": ""
+  },
+  {
+    "uniqueID": "visibility",
+    "type": "options",
+    "title": "Visibility",
+    "description": "When the overlay is shown: during gameplay only, also on the results screen, or always",
+    "options": [
+      "gameplay",
+      "gameplay + results",
+      "always"
+    ],
+    "value": "gameplay"
+  },
+  {
+    "uniqueID": "scrollDirection",
+    "type": "options",
+    "title": "Scroll direction",
+    "description": "auto follows the osu!mania skin/setting scroll direction; up and down override it for every mode",
+    "options": [
+      "auto",
+      "up",
+      "down"
+    ],
+    "value": "auto"
+  },
+  {
+    "uniqueID": "scrollSpeed",
+    "type": "text",
+    "title": "Scroll speed",
+    "description": "auto uses the game's mania scroll speed; otherwise 1-40 on the osu! scroll speed scale (constant real-time speed, independent of DT/HT)",
+    "options": "",
+    "value": "auto"
+  },
+  {
+    "uniqueID": "inputOffset",
+    "type": "text",
+    "title": "Input offset (ms)",
+    "description": "auto adds lazer's universal audio offset (scaled by the playback rate) so presses line up with notes; a number overrides it in gameplay milliseconds",
+    "options": "",
+    "value": "auto"
+  },
+  {
+    "uniqueID": "fade",
+    "type": "checkbox",
+    "title": "Fade out notes and presses",
+    "description": "Notes and presses lose opacity as they approach the far edge",
+    "options": "",
+    "value": true
+  },
+  {
+    "uniqueID": "showKeys",
+    "type": "checkbox",
+    "title": "Show keys",
+    "description": "EZ2ON-style key boxes with key names and press counts at the judgement edge",
+    "options": "",
+    "value": true
+  },
+  {
+    "uniqueID": "showNotes",
+    "type": "checkbox",
+    "title": "Show notes (mania)",
+    "description": "Draw the map's elapsed notes under the presses in mania: native maps and osu!standard converts, including key mods, Dual Stages, Hold Off, Invert, Mirror and lazer Random (stable Random has no readable seed, so it shows presses only)",
+    "options": "",
+    "value": true
+  },
+  {
+    "uniqueID": "maxLaneWidth",
+    "type": "number",
+    "title": "Maximum lane width (px)",
+    "description": "Lanes shrink to fit the overlay width but never grow past this",
+    "options": "",
+    "value": 64
+  },
+  {
+    "uniqueID": "renderer",
+    "type": "options",
+    "title": "Renderer",
+    "description": "webgl2 (default) renders everywhere; webgpu tries WebGPU first and falls back to WebGL2 when it is unavailable or reports errors (WebGPU canvases currently fail inside vosulay on NVIDIA/Linux)",
+    "options": [
+      "webgl2",
+      "webgpu"
+    ],
+    "value": "webgl2"
+  },
+  {
+    "uniqueID": "headerManiaColors",
+    "type": "header",
+    "title": "Mania colors (space separated RRGGBBAA hex values, one per lane)",
+    "description": ""
+  },
+  {
+    "uniqueID": "maniaNoteColors1K",
+    "type": "text",
+    "title": "[mania] 1K note colors",
+    "description": "Note color per lane for 1K, left to right. Key counts above 10K combine the two halves' settings.",
+    "options": "",
+    "value": "F4F2FFFF"
+  },
+  {
+    "uniqueID": "maniaHitColors1K",
+    "type": "text",
+    "title": "[mania] 1K hit colors",
+    "description": "Press color per lane for 1K, left to right",
+    "options": "",
+    "value": "FF5FAEFF"
+  },
+  {
+    "uniqueID": "maniaNoteColors2K",
+    "type": "text",
+    "title": "[mania] 2K note colors",
+    "description": "Note color per lane for 2K, left to right. Key counts above 10K combine the two halves' settings.",
+    "options": "",
+    "value": "F4F2FFFF F4F2FFFF"
+  },
+  {
+    "uniqueID": "maniaHitColors2K",
+    "type": "text",
+    "title": "[mania] 2K hit colors",
+    "description": "Press color per lane for 2K, left to right",
+    "options": "",
+    "value": "FF5FAEFF FF5FAEFF"
+  },
+  {
+    "uniqueID": "maniaNoteColors3K",
+    "type": "text",
+    "title": "[mania] 3K note colors",
+    "description": "Note color per lane for 3K, left to right. Key counts above 10K combine the two halves' settings.",
+    "options": "",
+    "value": "F4F2FFFF 3FCBFFFF F4F2FFFF"
+  },
+  {
+    "uniqueID": "maniaHitColors3K",
+    "type": "text",
+    "title": "[mania] 3K hit colors",
+    "description": "Press color per lane for 3K, left to right",
+    "options": "",
+    "value": "FF5FAEFF FF9B3DFF FF5FAEFF"
+  },
+  {
+    "uniqueID": "maniaNoteColors4K",
+    "type": "text",
+    "title": "[mania] 4K note colors",
+    "description": "Note color per lane for 4K, left to right. Key counts above 10K combine the two halves' settings.",
+    "options": "",
+    "value": "F4F2FFFF 3FCBFFFF 3FCBFFFF F4F2FFFF"
+  },
+  {
+    "uniqueID": "maniaHitColors4K",
+    "type": "text",
+    "title": "[mania] 4K hit colors",
+    "description": "Press color per lane for 4K, left to right",
+    "options": "",
+    "value": "FF5FAEFF FF9B3DFF FF9B3DFF FF5FAEFF"
+  },
+  {
+    "uniqueID": "maniaNoteColors5K",
+    "type": "text",
+    "title": "[mania] 5K note colors",
+    "description": "Note color per lane for 5K, left to right. Key counts above 10K combine the two halves' settings.",
+    "options": "",
+    "value": "F4F2FFFF 3FCBFFFF FFD53DFF 3FCBFFFF F4F2FFFF"
+  },
+  {
+    "uniqueID": "maniaHitColors5K",
+    "type": "text",
+    "title": "[mania] 5K hit colors",
+    "description": "Press color per lane for 5K, left to right",
+    "options": "",
+    "value": "FF5FAEFF FF9B3DFF A66BFFFF FF9B3DFF FF5FAEFF"
+  },
+  {
+    "uniqueID": "maniaNoteColors6K",
+    "type": "text",
+    "title": "[mania] 6K note colors",
+    "description": "Note color per lane for 6K, left to right. Key counts above 10K combine the two halves' settings.",
+    "options": "",
+    "value": "F4F2FFFF 3FCBFFFF FFD53DFF FFD53DFF 3FCBFFFF F4F2FFFF"
+  },
+  {
+    "uniqueID": "maniaHitColors6K",
+    "type": "text",
+    "title": "[mania] 6K hit colors",
+    "description": "Press color per lane for 6K, left to right",
+    "options": "",
+    "value": "FF5FAEFF FF9B3DFF A66BFFFF A66BFFFF FF9B3DFF FF5FAEFF"
+  },
+  {
+    "uniqueID": "maniaNoteColors7K",
+    "type": "text",
+    "title": "[mania] 7K note colors",
+    "description": "Note color per lane for 7K, left to right. Key counts above 10K combine the two halves' settings.",
+    "options": "",
+    "value": "F4F2FFFF 3FCBFFFF F4F2FFFF FFD53DFF F4F2FFFF 3FCBFFFF F4F2FFFF"
+  },
+  {
+    "uniqueID": "maniaHitColors7K",
+    "type": "text",
+    "title": "[mania] 7K hit colors",
+    "description": "Press color per lane for 7K, left to right",
+    "options": "",
+    "value": "FF5FAEFF FF9B3DFF FF5FAEFF A66BFFFF FF5FAEFF FF9B3DFF FF5FAEFF"
+  },
+  {
+    "uniqueID": "maniaNoteColors8K",
+    "type": "text",
+    "title": "[mania] 8K note colors",
+    "description": "Note color per lane for 8K, left to right. Key counts above 10K combine the two halves' settings.",
+    "options": "",
+    "value": "FF4B5CFF F4F2FFFF 3FCBFFFF F4F2FFFF FFD53DFF F4F2FFFF 3FCBFFFF F4F2FFFF"
+  },
+  {
+    "uniqueID": "maniaHitColors8K",
+    "type": "text",
+    "title": "[mania] 8K hit colors",
+    "description": "Press color per lane for 8K, left to right",
+    "options": "",
+    "value": "4DA3FFFF FF5FAEFF FF9B3DFF FF5FAEFF A66BFFFF FF5FAEFF FF9B3DFF FF5FAEFF"
+  },
+  {
+    "uniqueID": "maniaNoteColors9K",
+    "type": "text",
+    "title": "[mania] 9K note colors",
+    "description": "Note color per lane for 9K, left to right. Key counts above 10K combine the two halves' settings.",
+    "options": "",
+    "value": "FF4B5CFF F4F2FFFF 3FCBFFFF F4F2FFFF FFD53DFF F4F2FFFF 3FCBFFFF F4F2FFFF FF4B5CFF"
+  },
+  {
+    "uniqueID": "maniaHitColors9K",
+    "type": "text",
+    "title": "[mania] 9K hit colors",
+    "description": "Press color per lane for 9K, left to right",
+    "options": "",
+    "value": "4DA3FFFF FF5FAEFF FF9B3DFF FF5FAEFF A66BFFFF FF5FAEFF FF9B3DFF FF5FAEFF 4DA3FFFF"
+  },
+  {
+    "uniqueID": "maniaNoteColors10K",
+    "type": "text",
+    "title": "[mania] 10K note colors",
+    "description": "Note color per lane for 10K, left to right. Key counts above 10K combine the two halves' settings.",
+    "options": "",
+    "value": "FF4B5CFF F4F2FFFF 3FCBFFFF F4F2FFFF FFD53DFF 4FE08AFF F4F2FFFF 3FCBFFFF F4F2FFFF FF4B5CFF"
+  },
+  {
+    "uniqueID": "maniaHitColors10K",
+    "type": "text",
+    "title": "[mania] 10K hit colors",
+    "description": "Press color per lane for 10K, left to right",
+    "options": "",
+    "value": "4DA3FFFF FF5FAEFF FF9B3DFF FF5FAEFF A66BFFFF FFFFFFFF FF5FAEFF FF9B3DFF FF5FAEFF 4DA3FFFF"
+  },
+  {
+    "uniqueID": "headerOtherColors",
+    "type": "header",
+    "title": "Other modes (space separated RRGGBBAA hex values, one per key)",
+    "description": ""
+  },
+  {
+    "uniqueID": "standardHitColors",
+    "type": "text",
+    "title": "[standard] K1 K2 M1 M2 hit colors",
+    "description": "Press colors for K1 K2 M1 M2 on stable, or Left, Right, Smoke on lazer",
+    "options": "",
+    "value": "FF5FAEFF 4DA3FFFF A66BFFFF FF9B3DFF"
+  },
+  {
+    "uniqueID": "taikoHitColors",
+    "type": "text",
+    "title": "[taiko] Kat Don Don Kat hit colors",
+    "description": "Press colors for left rim, left centre, right centre, right rim",
+    "options": "",
+    "value": "4DA3FFFF FF5FAEFF FF5FAEFF 4DA3FFFF"
+  },
+  {
+    "uniqueID": "catchHitColors",
+    "type": "text",
+    "title": "[catch] Left Right Dash hit colors",
+    "description": "Press colors for left, right and dash",
+    "options": "",
+    "value": "FF5FAEFF 4DA3FFFF A66BFFFF"
+  }
+]

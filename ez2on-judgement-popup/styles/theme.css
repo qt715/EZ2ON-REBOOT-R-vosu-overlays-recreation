@@ -1,0 +1,51 @@
+/* EZ2ON REBOOT : R 2.0 theme shared by the overlays (copied into each overlay folder). */
+@font-face {
+  font-family: "EZ2 Montserrat";
+  src: url("../fonts/Montserrat.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: block;
+}
+
+:root {
+  /* No color-scheme: a dark scheme inside a light-scheme embedder (vosulay, OBS) makes Chromium
+     paint an opaque iframe backdrop instead of keeping the overlay transparent. */
+  --font: "EZ2 Montserrat", "Montserrat", "Pretendard", "Noto Sans CJK KR", "Noto Sans JP",
+    system-ui, sans-serif;
+  --kool: #14d8ea;
+  --cool: #ecaf20;
+  --good: #df843e;
+  --ok: #55c46a;
+  --miss: #d0262c;
+  --fail: #9037ea;
+  --rate: #929292;
+  --ink: #f4f4f8;
+  --muted: #8b8b94;
+  --dim: #4a4a52;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+.is-hidden {
+  opacity: 0 !important;
+  visibility: hidden;
+}

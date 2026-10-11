@@ -1,0 +1,136 @@
+.card {
+  --dim-amount: 0.72;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  padding: 14px 18px 16px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #0a0c0e;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.07);
+  transition: opacity 200ms ease-out;
+}
+
+/* Dimmed beatmap background, like the BGA showing through the EZ2ON card. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: center / cover no-repeat;
+  filter: saturate(0.85);
+}
+
+.backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(10 12 14 / 0.25), rgb(10 12 14 / 0.55)),
+    rgb(10 12 14 / var(--dim-amount));
+}
+
+.song,
+.chips {
+  position: relative;
+  z-index: 1;
+}
+
+.song {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  text-align: center;
+}
+
+.title {
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.15;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #f2f2f5;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 0.6);
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 5px;
+  max-width: 100%;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: #c6c6cc;
+  text-shadow: 0 1px 4px rgb(0 0 0 / 0.7);
+}
+
+.artist,
+.difficulty {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dot {
+  color: #8d8d95;
+}
+
+.keys {
+  color: #e9e9ee;
+}
+
+.ruleset {
+  color: #3cb4e6;
+  font-weight: 600;
+}
+
+/* Judgement chips: coloured pill over the count. */
+.chips {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0 6px;
+  list-style: none;
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex: 0 1 88px;
+  min-width: 0;
+}
+
+.chip-label {
+  width: 100%;
+  padding: 3px 0 2px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--tone) 88%, #fff) 0%, var(--tone) 100%);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: rgb(8 10 14 / 0.88);
+}
+
+.chip-value {
+  font-size: 23px;
+  font-weight: 500;
+  line-height: 1;
+  color: #f5f5f8;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 0.65);
+}

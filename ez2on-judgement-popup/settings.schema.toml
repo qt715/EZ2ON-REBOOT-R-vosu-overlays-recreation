@@ -1,0 +1,19 @@
+[[settings]]
+description = "When the overlay is shown: during gameplay only, also on the results screen, or always"
+options = [
+    "gameplay",
+    "gameplay + results",
+    "always",
+]
+title = "Visibility"
+type = "options"
+uniqueID = "visibility"
+value = "gameplay"
+
+[[settings]]
+description = "How long the judgement popup stays fully visible before fading"
+options = ""
+title = "Popup hold time (ms)"
+type = "number"
+uniqueID = "popupHoldMs"
+value = 450

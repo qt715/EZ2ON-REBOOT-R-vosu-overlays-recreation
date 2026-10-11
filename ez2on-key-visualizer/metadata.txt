@@ -1,0 +1,7 @@
+Usecase: ingame,obs-overlay
+Name: EZ2ON Key Visualizer
+Version: 1.0.0
+Author: sxlvia
+CompatibleWith: vosu
+Resolution: 480x720
+Notes: Keypresses and holds scrolling over elapsed mania notes, EZ2ON style (WebGPU / WebGL2)

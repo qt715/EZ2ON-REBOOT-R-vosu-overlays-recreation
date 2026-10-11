@@ -1,0 +1,22 @@
+[
+  {
+    "uniqueID": "visibility",
+    "type": "options",
+    "title": "Visibility",
+    "description": "When the overlay is shown: during gameplay only, also on the results screen, or always",
+    "options": [
+      "gameplay",
+      "gameplay + results",
+      "always"
+    ],
+    "value": "gameplay"
+  },
+  {
+    "uniqueID": "popupHoldMs",
+    "type": "number",
+    "title": "Popup hold time (ms)",
+    "description": "How long the judgement popup stays fully visible before fading",
+    "options": "",
+    "value": 450
+  }
+]

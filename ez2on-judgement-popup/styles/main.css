@@ -1,0 +1,65 @@
+.popup-zone {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  contain: layout paint;
+  transition: opacity 160ms ease-out;
+}
+
+.popup {
+  --glow: #c9c4ff;
+  /* Sized from the overlay box so resizing the placement resizes the text. */
+  font-size: min(72vh, 21vw);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  opacity: 0;
+  background: var(--fill);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 9px color-mix(in srgb, var(--glow) 55%, transparent))
+    drop-shadow(0 2px 2px rgb(0 0 0 / 0.55));
+  will-change: transform, opacity;
+  /* Negative tracking pushes the last glyph past the box; padding keeps it inside the gradient. */
+  padding: 0 0.08em;
+}
+
+.popup .lead {
+  background: linear-gradient(155deg, #ff8a3d 0%, #ff4152 55%, #e5245e 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.popup[data-tone="kool"] {
+  --fill: linear-gradient(180deg, #ffffff 35%, #cbc7f2 100%);
+  --glow: #ff6a5a;
+}
+
+.popup[data-tone="cool"] {
+  --fill: linear-gradient(100deg, #f08a1c 0%, #f7b52c 50%, #ffd94a 100%);
+  --glow: #f5a623;
+}
+
+.popup[data-tone="good"] {
+  --fill: linear-gradient(180deg, #ffb070 0%, #f07a32 100%);
+  --glow: #ef7d34;
+}
+
+.popup[data-tone="ok"] {
+  --fill: linear-gradient(180deg, #a6f0a6 0%, #3fb45e 100%);
+  --glow: #4cc46a;
+}
+
+.popup[data-tone="miss"] {
+  --fill: linear-gradient(180deg, #ff7d7d 0%, #d0262c 100%);
+  --glow: #e0353d;
+}
+
+.popup[data-tone="fail"] {
+  --fill: linear-gradient(180deg, #f3eeff 25%, #b8a3ff 70%, #8f3cec 100%);
+  --glow: #9037ea;
+}

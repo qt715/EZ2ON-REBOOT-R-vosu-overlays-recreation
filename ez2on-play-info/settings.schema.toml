@@ -1,0 +1,27 @@
+[[settings]]
+description = "When the overlay is shown: during gameplay only, also on the results screen, or always"
+options = [
+    "gameplay",
+    "gameplay + results",
+    "always",
+]
+title = "Visibility"
+type = "options"
+uniqueID = "visibility"
+value = "gameplay + results"
+
+[[settings]]
+description = "Show the original-language title and artist when the map has them"
+options = ""
+title = "Unicode metadata"
+type = "checkbox"
+uniqueID = "unicode"
+value = false
+
+[[settings]]
+description = "How strongly the beatmap background is darkened behind the card (0-100)"
+options = ""
+title = "Background dim (%)"
+type = "number"
+uniqueID = "backgroundDim"
+value = 72

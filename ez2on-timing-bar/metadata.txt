@@ -1,0 +1,7 @@
+Usecase: ingame,obs-overlay
+Name: EZ2ON Timing Bar
+Version: 1.0.0
+Author: sxlvia
+CompatibleWith: vosu
+Resolution: 500x90
+Notes: EZ2ON REBOOT : R 2.0 timing bar with EARLY / LATE popups

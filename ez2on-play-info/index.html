@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EZ2ON Play Information</title>
+    <link rel="stylesheet" href="styles/theme.css" />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <main class="card is-hidden" data-root>
+      <div class="backdrop" data-backdrop></div>
+      <header class="song">
+        <h1 class="title" data-title></h1>
+        <p class="meta">
+          <span class="artist" data-artist></span>
+          <span class="dot" aria-hidden="true">•</span>
+          <span class="mode"><span class="keys" data-keys></span><span class="ruleset" data-ruleset></span></span>
+          <span class="dot" aria-hidden="true">•</span>
+          <span class="difficulty" data-difficulty></span>
+        </p>
+      </header>
+      <ol class="chips" data-chips></ol>
+    </main>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>

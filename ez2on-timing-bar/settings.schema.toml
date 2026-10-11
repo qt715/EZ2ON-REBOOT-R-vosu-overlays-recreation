@@ -1,0 +1,51 @@
+[[settings]]
+description = "When the overlay is shown: during gameplay only, also on the results screen, or always"
+options = [
+    "gameplay",
+    "gameplay + results",
+    "always",
+]
+title = "Visibility"
+type = "options"
+uniqueID = "visibility"
+value = "gameplay"
+
+[[settings]]
+description = "Pop up EARLY (left side, under its label) or LATE (right side) for hits outside the threshold"
+options = ""
+title = "Show EARLY / LATE"
+type = "checkbox"
+uniqueID = "showEarlyLate"
+value = true
+
+[[settings]]
+description = "Text color of the EARLY popup"
+options = ""
+title = "EARLY color"
+type = "color"
+uniqueID = "earlyColor"
+value = "#1ec8d2"
+
+[[settings]]
+description = "Text color of the LATE popup"
+options = ""
+title = "LATE color"
+type = "color"
+uniqueID = "lateColor"
+value = "#e5383f"
+
+[[settings]]
+description = "'auto' uses the best judgement window (mania 320, otherwise 300); a number sets a fixed threshold, 0 shows it on every hit"
+options = ""
+title = "EARLY / LATE threshold (ms)"
+type = "text"
+uniqueID = "earlyLateThreshold"
+value = "auto"
+
+[[settings]]
+description = "Seconds a hit stays on the bar before fading out"
+options = ""
+title = "Hit line lifetime (s)"
+type = "number"
+uniqueID = "hitLifetime"
+value = 3

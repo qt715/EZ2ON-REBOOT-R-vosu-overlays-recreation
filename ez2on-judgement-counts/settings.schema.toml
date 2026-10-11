@@ -1,0 +1,11 @@
+[[settings]]
+description = "When the overlay is shown: during gameplay only, also on the results screen, or always"
+options = [
+    "gameplay",
+    "gameplay + results",
+    "always",
+]
+title = "Visibility"
+type = "options"
+uniqueID = "visibility"
+value = "gameplay"

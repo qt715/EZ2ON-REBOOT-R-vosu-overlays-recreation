@@ -1,0 +1,7 @@
+Usecase: ingame,obs-overlay
+Name: EZ2ON Judge Rate
+Version: 1.0.0
+Author: sxlvia
+CompatibleWith: vosu
+Resolution: 240x64
+Notes: EZ2ON REBOOT : R 2.0 JUDGE RATE: accuracy over the whole map, 100% only when every object gets the best judgement

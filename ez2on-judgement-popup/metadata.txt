@@ -1,0 +1,7 @@
+Usecase: ingame,obs-overlay
+Name: EZ2ON Judgement Popup
+Version: 1.0.0
+Author: sxlvia
+CompatibleWith: vosu
+Resolution: 500x150
+Notes: EZ2ON REBOOT : R 2.0 large judgement popup on every hit

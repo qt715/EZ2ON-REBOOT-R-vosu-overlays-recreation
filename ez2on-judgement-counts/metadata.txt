@@ -1,0 +1,7 @@
+Usecase: ingame,obs-overlay
+Name: EZ2ON Judgement Counts
+Version: 1.0.0
+Author: sxlvia
+CompatibleWith: vosu
+Resolution: 500x56
+Notes: EZ2ON REBOOT : R 2.0 judgement count row with osu! judgement names

@@ -1,0 +1,14 @@
+[
+  {
+    "uniqueID": "visibility",
+    "type": "options",
+    "title": "Visibility",
+    "description": "When the overlay is shown: during gameplay only, also on the results screen, or always",
+    "options": [
+      "gameplay",
+      "gameplay + results",
+      "always"
+    ],
+    "value": "gameplay"
+  }
+]

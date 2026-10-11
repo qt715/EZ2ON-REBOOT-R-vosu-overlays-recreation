@@ -1,0 +1,7 @@
+Usecase: ingame,obs-overlay
+Name: EZ2ON Play Information
+Version: 1.0.0
+Author: sxlvia
+CompatibleWith: vosu
+Resolution: 780x150
+Notes: EZ2ON REBOOT : R 2.0 play information card: song, mode, difficulty, judgements and rate

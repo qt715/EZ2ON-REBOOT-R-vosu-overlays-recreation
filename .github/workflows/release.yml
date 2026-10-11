@@ -1,0 +1,24 @@
+name: Release
+
+# Pushing a tag such as v1.0.0 publishes a release with ez2on-overlays.zip, whose root holds one
+# folder per overlay so users can drop them straight into vosu's static folder.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build zip
+        run: zip -r -X ez2on-overlays.zip ez2on-*/ LICENSE
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" ez2on-overlays.zip --title "$GITHUB_REF_NAME" --generate-notes

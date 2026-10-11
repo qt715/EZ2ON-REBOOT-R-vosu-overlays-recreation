@@ -1,0 +1,30 @@
+[
+  {
+    "uniqueID": "visibility",
+    "type": "options",
+    "title": "Visibility",
+    "description": "When the overlay is shown: during gameplay only, also on the results screen, or always",
+    "options": [
+      "gameplay",
+      "gameplay + results",
+      "always"
+    ],
+    "value": "gameplay + results"
+  },
+  {
+    "uniqueID": "unicode",
+    "type": "checkbox",
+    "title": "Unicode metadata",
+    "description": "Show the original-language title and artist when the map has them",
+    "options": "",
+    "value": false
+  },
+  {
+    "uniqueID": "backgroundDim",
+    "type": "number",
+    "title": "Background dim (%)",
+    "description": "How strongly the beatmap background is darkened behind the card (0-100)",
+    "options": "",
+    "value": 72
+  }
+]
