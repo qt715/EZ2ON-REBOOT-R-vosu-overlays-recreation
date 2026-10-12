@@ -155,12 +155,9 @@ export class InstanceBatch {
 
   push(x, y, w, h, color, style, outline = 0) {
     if (w <= 0 || h <= 0) return;
-    if (this.count === this.capacity) {
-      // Growth happens only when a frame needs more rectangles than ever before.
-      const grown = new Float32Array(this.data.length * 2);
-      grown.set(this.data);
-      this.data = grown;
-    }
+    // Growth stays out of line so push() is small enough for V8 to inline into the draw loop;
+    // a non-inlined call boxes every double argument into a fresh heap number.
+    if (this.count === this.capacity) this.grow();
     const o = this.count * FLOATS_PER_INSTANCE;
     const d = this.data;
     d[o] = x;
@@ -174,6 +171,13 @@ export class InstanceBatch {
     d[o + 8] = style;
     d[o + 9] = outline;
     this.count++;
+  }
+
+  /** Only when a frame needs more rectangles than ever before. */
+  grow() {
+    const grown = new Float32Array(this.data.length * 2);
+    grown.set(this.data);
+    this.data = grown;
   }
 }
 
@@ -240,6 +244,9 @@ class WebGpuBackend {
     });
     this.instanceBuffer = null;
     this.instanceBytes = 0;
+    this.attachment = { view: null, clearValue: { r: 0, g: 0, b: 0, a: 0 }, loadOp: "clear", storeOp: "store" };
+    this.passDescriptor = { colorAttachments: [this.attachment] };
+    this.commandBuffers = [null];
   }
 
   draw(batch, frame) {
@@ -263,17 +270,10 @@ class WebGpuBackend {
     device.queue.writeBuffer(this.uniformBuffer, 0, u);
     if (bytes > 0) device.queue.writeBuffer(this.instanceBuffer, 0, batch.data, 0, batch.count * FLOATS_PER_INSTANCE);
 
+    // Descriptors are reused; only the swapchain view changes per frame.
+    this.attachment.view = this.context.getCurrentTexture().createView();
     const encoder = device.createCommandEncoder();
-    const pass = encoder.beginRenderPass({
-      colorAttachments: [
-        {
-          view: this.context.getCurrentTexture().createView(),
-          clearValue: { r: 0, g: 0, b: 0, a: 0 },
-          loadOp: "clear",
-          storeOp: "store",
-        },
-      ],
-    });
+    const pass = encoder.beginRenderPass(this.passDescriptor);
     if (bytes > 0) {
       pass.setPipeline(this.pipeline);
       pass.setBindGroup(0, this.bindGroup);
@@ -281,7 +281,8 @@ class WebGpuBackend {
       pass.draw(4, batch.count);
     }
     pass.end();
-    device.queue.submit([encoder.finish()]);
+    this.commandBuffers[0] = encoder.finish();
+    device.queue.submit(this.commandBuffers);
   }
 
   destroy() {

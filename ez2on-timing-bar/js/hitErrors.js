@@ -46,7 +46,7 @@ export class HitErrorStream {
       this.delivered.clear();
       for (let i = Math.max(0, errors.length - 2 * WINDOW); i < errors.length; i++) this.delivered.set(i, errors[i]);
       this.onSnapshot(errors);
-      this.window = this.openWindow(this.length);
+      this.window = this.openWindow();
     });
   }
 
@@ -57,7 +57,14 @@ export class HitErrorStream {
     this.nextWindow = null;
   }
 
-  openWindow(start) {
+  /**
+   * Watches the last delivered index (the anchor) plus the next ones. Indices that do not exist
+   * yet produce no frames, so without the anchor a retry back to an empty or shorter array would
+   * go unnoticed until the new attempt outgrew the old one; the anchor's removal or change
+   * reports the reset.
+   */
+  openWindow() {
+    const start = Math.max(0, this.length - 1);
     const pointers = Array.from({ length: WINDOW }, (_, i) => `${ARRAY}/${start + i}`);
     const window = { start, subscription: null };
     window.subscription = new Subscription(pointers, (values, changed) => this.receive(window, values, changed));
@@ -92,7 +99,7 @@ export class HitErrorStream {
     // Roll forward before the current window runs out; overlapping windows deduplicate through
     // `pending` and `delivered`, so no error is lost or delivered twice.
     if (window === this.window && this.length >= window.start + WINDOW - ROLL_MARGIN && !this.nextWindow) {
-      this.nextWindow = this.openWindow(this.length);
+      this.nextWindow = this.openWindow();
     } else if (window === this.nextWindow) {
       this.window.subscription.close();
       this.window = this.nextWindow;
