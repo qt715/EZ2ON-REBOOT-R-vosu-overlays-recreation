@@ -14,8 +14,9 @@ const POINTERS = [
   "/play/mode/number",
   "/play/hitErrorArray",
   "/beatmap/stats/hitWindow",
+  "/play/mods/rate",
 ];
-const [STATE, MODE, HIT_ERRORS, HIT_WINDOW] = POINTERS.keys();
+const [STATE, MODE, HIT_ERRORS, HIT_WINDOW, RATE] = POINTERS.keys();
 
 // Timing windows per ruleset, tightest first, paired with the judgement tone they award.
 const WINDOWS = {
@@ -175,8 +176,11 @@ function update(values, changed, initial = false) {
   const fresh = !initial && state === STATE_PLAYING;
   if (errors.length === seenErrors) return;
   const start = fresh ? seenErrors : Math.max(seenErrors, errors.length - AVERAGE_SPAN);
+  // Hit errors are gameplay milliseconds, but vosu's windows are already divided by the clock
+  // rate (real milliseconds); bring the errors onto the same scale before judging them.
+  const rate = values[RATE] > 0 ? values[RATE] : 1;
   for (let i = start; i < errors.length; i++) {
-    const error = errors[i];
+    const error = errors[i] / rate;
     if (Number.isFinite(error)) plot(error, fresh && i === errors.length - 1);
   }
   seenErrors = errors.length;

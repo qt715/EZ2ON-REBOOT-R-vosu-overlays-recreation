@@ -39,7 +39,7 @@
     "uniqueID": "earlyLateThreshold",
     "type": "text",
     "title": "EARLY / LATE threshold (ms)",
-    "description": "'auto' uses the best judgement window (mania 320, otherwise 300); a number sets a fixed threshold, 0 shows it on every hit",
+    "description": "'auto' uses the best judgement window (mania 320, otherwise 300); a number sets a fixed threshold in real milliseconds (rate mods already accounted for), 0 shows it on every hit",
     "options": "",
     "value": "auto"
   },
