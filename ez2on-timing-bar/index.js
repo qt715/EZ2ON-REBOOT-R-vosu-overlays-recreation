@@ -8,15 +8,10 @@ import {
   num,
 } from "./js/vosu.js";
 import { MODE_MANIA, MODE_STANDARD, MODE_TAIKO } from "./js/judgements.js";
+import { HitErrorStream } from "./js/hitErrors.js";
 
-const POINTERS = [
-  "/state/number",
-  "/play/mode/number",
-  "/play/hitErrorArray",
-  "/beatmap/stats/hitWindow",
-  "/play/mods/rate",
-];
-const [STATE, MODE, HIT_ERRORS, HIT_WINDOW, RATE] = POINTERS.keys();
+const POINTERS = ["/state/number", "/play/mode/number", "/beatmap/stats/hitWindow", "/play/mods/rate"];
+const [STATE, MODE, HIT_WINDOW, RATE] = POINTERS.keys();
 
 // Timing windows per ruleset, tightest first, paired with the judgement tone they award.
 const WINDOWS = {
@@ -69,7 +64,6 @@ let state = -1;
 let mode = -1;
 let windows = [];
 let rangeMs = FALLBACK_RANGE_MS;
-let seenErrors = 0;
 let recent = [];
 let calloutAnimation = null;
 let lastValues = null;
@@ -153,7 +147,7 @@ function showCallout(error) {
   );
 }
 
-function update(values, changed, initial = false) {
+function update(values, changed) {
   lastValues = values;
   const nextState = values[STATE] ?? -1;
   if (nextState !== state) {
@@ -165,25 +159,31 @@ function update(values, changed, initial = false) {
     mode = nextMode;
     resolveWindows(values[HIT_WINDOW]);
   }
+}
 
-  const errors = Array.isArray(values[HIT_ERRORS]) ? values[HIT_ERRORS] : [];
-  if (errors.length < seenErrors) {
-    clearHits();
-    seenErrors = 0;
+/**
+ * Hit errors are gameplay milliseconds, but vosu's windows are already divided by the clock rate
+ * (real milliseconds); bring the errors onto the same scale before judging them.
+ */
+function realMs(error) {
+  const rate = lastValues?.[RATE] > 0 ? lastValues[RATE] : 1;
+  return error / rate;
+}
+
+/** Hits that already happened (after connecting or a retry): redraw what could still be visible. */
+function showSnapshot(errors) {
+  clearHits();
+  for (let i = Math.max(0, errors.length - AVERAGE_SPAN); i < errors.length; i++) {
+    if (Number.isFinite(errors[i])) plot(realMs(errors[i]), false);
   }
-  // A full snapshot (first frame after (re)connecting) holds hits that already happened: redraw
-  // only what could still be visible, without callouts. Live frames carry new hits.
-  const fresh = !initial && state === STATE_PLAYING;
-  if (errors.length === seenErrors) return;
-  const start = fresh ? seenErrors : Math.max(seenErrors, errors.length - AVERAGE_SPAN);
-  // Hit errors are gameplay milliseconds, but vosu's windows are already divided by the clock
-  // rate (real milliseconds); bring the errors onto the same scale before judging them.
-  const rate = values[RATE] > 0 ? values[RATE] : 1;
-  for (let i = start; i < errors.length; i++) {
-    const error = errors[i] / rate;
-    if (Number.isFinite(error)) plot(error, fresh && i === errors.length - 1);
-  }
-  seenErrors = errors.length;
+  placeAverage();
+}
+
+function showNew(errors) {
+  const live = state === STATE_PLAYING;
+  errors.forEach((error, i) => {
+    if (Number.isFinite(error)) plot(realMs(error), live && i === errors.length - 1);
+  });
   placeAverage();
 }
 
@@ -204,4 +204,5 @@ function applySettings(incoming) {
 }
 
 new Subscription(POINTERS, update);
+new HitErrorStream(showSnapshot, showNew);
 new SettingsChannel(applySettings);

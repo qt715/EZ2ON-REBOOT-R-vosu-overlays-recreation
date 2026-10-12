@@ -62,7 +62,6 @@ const SCROLL_TRAVEL_UNITS = 402;
 const STAGE_UNITS = 480;
 const REWIND_RESET_MS = 300;
 const FADE_START = 0.45;
-const CANVAS_ALIGN = 128;
 
 const root = document.querySelector("[data-root]");
 const keysRow = root.querySelector("[data-keys]");
@@ -239,15 +238,9 @@ function measure() {
   view.cssHeight = rect.height;
   view.width = Math.max(1, Math.round(rect.width * view.dpr));
   view.height = Math.max(1, Math.round(rect.height * view.dpr));
-  // Dawn on NVIDIA/Linux (Chromium 150, CEF included) fails to present WebGPU canvases whose
-  // backing size is not 128-pixel aligned; pad the backing store and let the overflow clip.
-  const backingWidth = Math.ceil(view.width / CANVAS_ALIGN) * CANVAS_ALIGN;
-  const backingHeight = Math.ceil(view.height / CANVAS_ALIGN) * CANVAS_ALIGN;
-  if (canvas.width !== backingWidth || canvas.height !== backingHeight) {
-    canvas.width = backingWidth;
-    canvas.height = backingHeight;
-    canvas.style.width = `${backingWidth / view.dpr}px`;
-    canvas.style.height = `${backingHeight / view.dpr}px`;
+  if (canvas.width !== view.width || canvas.height !== view.height) {
+    canvas.width = view.width;
+    canvas.height = view.height;
   }
   const lanes = Math.max(1, laneCount);
   const laneCss = Math.min(settings.maxLaneWidth, rect.width / lanes);
@@ -386,7 +379,9 @@ const geometry = { ppm: 0, nowY: 0, sign: 1, noteHeight: 0, limit: 0, outline: 2
 function draw() {
   batch.reset();
   const down = direction() === "down";
-  root.dataset.direction = down ? "down" : "up";
+  const directionName = down ? "down" : "up";
+  // Attribute writes invalidate style even when unchanged; vosulay's overlays share one thread.
+  if (root.dataset.direction !== directionName) root.dataset.direction = directionName;
   const offset = inputOffset();
   const now = clock.now() + offset;
   const ppm =

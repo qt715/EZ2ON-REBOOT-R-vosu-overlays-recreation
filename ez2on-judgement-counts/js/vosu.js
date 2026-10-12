@@ -48,7 +48,7 @@ export class Subscription {
       socket.send(JSON.stringify(this.pointers));
     };
     socket.onmessage = (event) => {
-      if (typeof event.data === "string") this.apply(event.data);
+      if (this.socket === socket && typeof event.data === "string") this.apply(event.data);
     };
     socket.onerror = () => socket.close();
     socket.onclose = () => {
@@ -56,6 +56,14 @@ export class Subscription {
       this.socket = null;
       this.timer = setTimeout(() => this.connect(), reconnectDelay(this.attempt++));
     };
+  }
+
+  /** Stops the subscription for good: no further frames, no reconnect. */
+  close() {
+    clearTimeout(this.timer);
+    const socket = this.socket;
+    this.socket = null;
+    socket?.close();
   }
 
   apply(payload) {

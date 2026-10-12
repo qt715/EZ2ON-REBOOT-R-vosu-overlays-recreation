@@ -180,7 +180,9 @@ export class InstanceBatch {
 class WebGpuBackend {
   static async create(canvas) {
     if (!navigator.gpu) return null;
-    const adapter = await navigator.gpu.requestAdapter({ powerPreference: "low-power" });
+    // Must be the GPU Chromium composites on. On hybrid systems "low-power" picks the iGPU, whose
+    // canvas textures the compositor cannot import, so nothing is ever shown.
+    const adapter = await navigator.gpu.requestAdapter({ powerPreference: "high-performance" });
     if (!adapter) return null;
     const device = await adapter.requestDevice();
     const context = canvas.getContext("webgpu");
