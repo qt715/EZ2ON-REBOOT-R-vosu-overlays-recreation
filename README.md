@@ -50,7 +50,7 @@ Open an overlay's settings from the vosu dashboard. Every overlay has a **Visibi
 ## Requirements
 
 - [vosu](https://github.com/shiruviaa/vosu). The judgement overlays read standard tosu fields, but the timing bar and key visualizer rely on vosu-only data (per-key press timestamps), so tosu isn't supported.
-- For in-game display, [vosulay](https://github.com/shiruviaa/vosulay). Set its FPS limit (Settings → Advanced) to 60–120, preferably one that divides your refresh rate evenly. Its `auto` setting renders the overlays at your display's refresh rate. On a 360 Hz display with OBS capturing the game, that lowered osu! from 720 to about 400 fps even on an RTX 5090, while limits of 60–180 kept it at 720.
+- For in-game display, [vosulay](https://github.com/shiruviaa/vosulay). Set its FPS limit (Settings → Advanced) to 60–120, preferably one that divides your refresh rate evenly. Its `auto` setting renders the overlays at your display's refresh rate. In one test on a 360 Hz display with an RTX 5090, OBS was capturing both the game (game capture) and the desktop (PipeWire). With vosulay on `auto`, osu! fell from 720 to about 400 fps; with game capture alone it ran at about 660. Limits of 60–180 kept osu! at 720 in the two-source setup.
 
 ## Credits
 
