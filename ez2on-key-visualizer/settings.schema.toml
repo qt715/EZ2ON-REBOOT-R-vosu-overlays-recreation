@@ -88,6 +88,14 @@ uniqueID = "renderer"
 value = "webgl2"
 
 [[settings]]
+description = "Highest rate the visualizer redraws at; 0 redraws on every frame the host offers (vosulay paces at your display refresh unless its own FPS limit is set). Every redraw makes the host compose a new frame, so a lower limit saves work there. For evenly spaced frames, pick a divisor of your refresh rate."
+options = ""
+title = "Frame rate limit (fps)"
+type = "number"
+uniqueID = "fpsLimit"
+value = 60
+
+[[settings]]
 description = ""
 title = "Mania colors (space separated RRGGBBAA hex values, one per lane)"
 type = "header"

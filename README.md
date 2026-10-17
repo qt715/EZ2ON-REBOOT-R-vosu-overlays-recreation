@@ -44,13 +44,13 @@ To update, download the new release and replace the folders. Your settings are s
 Open an overlay's settings from the vosu dashboard. Every overlay has a **Visibility** setting (gameplay only, gameplay and results, or always). Other notable settings:
 
 - **Timing Bar:** EARLY / LATE colours, EARLY / LATE threshold, how long hits stay on the bar.
-- **Key Visualizer:** scroll direction and speed (`auto` follows your osu! mania settings), fading, key boxes, note and press colours per key count, and an input offset.
+- **Key Visualizer:** scroll direction and speed (`auto` follows your osu! mania settings), fading, key boxes, note and press colours per key count, an input offset, and a frame rate limit (60 fps by default; `0` redraws on every frame).
 - **Play Information:** background dim, unicode titles.
 
 ## Requirements
 
 - [vosu](https://github.com/shiruviaa/vosu). The judgement overlays read standard tosu fields, but the timing bar and key visualizer rely on vosu-only data (per-key press timestamps), so tosu isn't supported.
-- For in-game display, [vosulay](https://github.com/shiruviaa/vosulay).
+- For in-game display, [vosulay](https://github.com/shiruviaa/vosulay). Set its FPS limit (Settings → Advanced) to 60–120, preferably one that divides your refresh rate evenly. Its `auto` setting renders the overlays at your display's refresh rate. On a 360 Hz display with OBS capturing the game, that lowered osu! from 720 to about 400 fps even on an RTX 5090, while limits of 60–180 kept it at 720.
 
 ## Credits
 

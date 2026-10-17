@@ -57,8 +57,9 @@ export class PlaybackClock {
     this.isPlaying = isPlaying;
   }
 
-  now() {
-    return this._estimateAt(this._nowMs());
+  /** Gameplay time at `at` (defaults to now), on the same timeline as `performance.now()`. */
+  now(at = this._nowMs()) {
+    return this._estimateAt(at);
   }
 
   /** True while samples keep arriving during play, i.e. the picture is moving. */

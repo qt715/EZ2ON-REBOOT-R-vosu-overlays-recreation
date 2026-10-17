@@ -9,6 +9,7 @@ import {
 } from "./js/vosu.js";
 import { PlaybackClock } from "./js/clock.js";
 import { PressHistory } from "./js/presses.js";
+import { FrameLimiter } from "./js/frameLimiter.js";
 import { buildColumns, lowerBound } from "./js/beatmap.js";
 import {
   DEFAULT_MODE_HIT_COLORS,
@@ -80,6 +81,8 @@ const settings = {
   // INVALID_EXTERNAL_HANDLE on every composite, GPU-process crash on teardown) and a single
   // instanced draw gains nothing from it, so WebGPU is opt-in.
   renderer: "webgl2",
+  // 0 = draw on every animation frame the host offers.
+  fpsLimit: 60,
   colorText: {},
 };
 
@@ -344,9 +347,19 @@ function requestRender() {
   if (raf === 0 && backend) raf = requestAnimationFrame(renderFrame);
 }
 
-function renderFrame() {
+const limiter = new FrameLimiter();
+limiter.fps = settings.fpsLimit;
+
+function renderFrame(timestamp) {
   raf = 0;
-  draw();
+  // The backend can be torn down between frames (WebGPU falling back to WebGL2); the new one
+  // requests its own render once ready.
+  if (!backend) return;
+  if (!limiter.shouldDraw(timestamp)) {
+    raf = requestAnimationFrame(renderFrame);
+    return;
+  }
+  draw(timestamp);
   if (clock.isAdvancing() && !root.classList.contains("is-hidden")) requestRender();
 }
 
@@ -376,14 +389,15 @@ function pushSpan(t0, t1, now, lane, color, style, geometry) {
 
 const geometry = { ppm: 0, nowY: 0, sign: 1, noteHeight: 0, limit: 0, outline: 2 };
 
-function draw() {
+/** @param {number} timestamp animation-frame time; positions use it so motion steps stay even */
+function draw(timestamp = performance.now()) {
   batch.reset();
   const down = direction() === "down";
   const directionName = down ? "down" : "up";
   // Attribute writes invalidate style even when unchanged; vosulay's overlays share one thread.
   if (root.dataset.direction !== directionName) root.dataset.direction = directionName;
   const offset = inputOffset();
-  const now = clock.now() + offset;
+  const now = clock.now(timestamp) + offset;
   const ppm =
     (((view.cssHeight / STAGE_UNITS) * SCROLL_TRAVEL_UNITS * scrollSpeed()) / SCROLL_MAX_TIME_RANGE_MS / rate) *
     view.dpr;
@@ -441,6 +455,8 @@ function applySettings(incoming) {
   settings.showNotes = bool(incoming.showNotes, settings.showNotes);
   settings.maxLaneWidth = num(incoming.maxLaneWidth, settings.maxLaneWidth, 8, 400);
   if (["webgl2", "webgpu"].includes(incoming.renderer)) settings.renderer = incoming.renderer;
+  settings.fpsLimit = num(incoming.fpsLimit, settings.fpsLimit, 0, 1000);
+  limiter.fps = settings.fpsLimit;
   for (const [key, value] of Object.entries(incoming)) {
     if (/HitColors|NoteColors/.test(key) && typeof value === "string") settings.colorText[key] = value;
   }
