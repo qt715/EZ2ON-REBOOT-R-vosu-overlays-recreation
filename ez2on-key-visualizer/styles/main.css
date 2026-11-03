@@ -39,6 +39,28 @@
   bottom: 0;
 }
 
+/* Debug frame rate readout, at the far edge so it never covers the keys. */
+.fps-readout {
+  position: absolute;
+  left: 4px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: rgb(0 0 0 / 0.65);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.visualizer[data-direction="down"] .fps-readout {
+  bottom: 4px;
+}
+
+.visualizer[data-direction="up"] .fps-readout {
+  top: 4px;
+}
+
 .key {
   position: relative;
   display: flex;

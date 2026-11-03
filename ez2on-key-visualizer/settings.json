@@ -78,6 +78,18 @@
     "value": 64
   },
   {
+    "uniqueID": "alignment",
+    "type": "options",
+    "title": "Alignment",
+    "description": "Where the lanes sit when they are narrower than the overlay",
+    "options": [
+      "center",
+      "left",
+      "right"
+    ],
+    "value": "center"
+  },
+  {
     "uniqueID": "renderer",
     "type": "options",
     "title": "Renderer",
@@ -95,6 +107,14 @@
     "description": "Highest rate the visualizer redraws at; 0 redraws on every frame the host offers (vosulay paces at your display refresh unless its own FPS limit is set). Every redraw makes the host compose a new frame, so a lower limit saves work there. For evenly spaced frames, pick a divisor of your refresh rate.",
     "options": "",
     "value": 60
+  },
+  {
+    "uniqueID": "showFps",
+    "type": "checkbox",
+    "title": "Show frame rate (debug)",
+    "description": "Shows the visualizer's drawn frame rate over the last 10 seconds of gameplay: the average, and the 95th and 99th percentile frame times as fps (95% and 99% of frames came at least that fast). Freezes while vosu's gameplay data stalls count as long frames; pauses and other screens do not.",
+    "options": "",
+    "value": false
   },
   {
     "uniqueID": "headerManiaColors",

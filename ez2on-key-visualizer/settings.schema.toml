@@ -77,6 +77,18 @@ uniqueID = "maxLaneWidth"
 value = 64
 
 [[settings]]
+description = "Where the lanes sit when they are narrower than the overlay"
+options = [
+    "center",
+    "left",
+    "right",
+]
+title = "Alignment"
+type = "options"
+uniqueID = "alignment"
+value = "center"
+
+[[settings]]
 description = "webgl2 (default) renders everywhere; webgpu tries WebGPU first and falls back to WebGL2 when it is unavailable or reports errors (WebGPU canvases currently fail inside vosulay on NVIDIA/Linux)"
 options = [
     "webgl2",
@@ -94,6 +106,14 @@ title = "Frame rate limit (fps)"
 type = "number"
 uniqueID = "fpsLimit"
 value = 60
+
+[[settings]]
+description = "Shows the visualizer's drawn frame rate over the last 10 seconds of gameplay: the average, and the 95th and 99th percentile frame times as fps (95% and 99% of frames came at least that fast). Freezes while vosu's gameplay data stalls count as long frames; pauses and other screens do not."
+options = ""
+title = "Show frame rate (debug)"
+type = "checkbox"
+uniqueID = "showFps"
+value = false
 
 [[settings]]
 description = ""

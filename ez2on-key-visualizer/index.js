@@ -10,6 +10,7 @@ import {
 import { PlaybackClock } from "./js/clock.js";
 import { PressHistory } from "./js/presses.js";
 import { FrameLimiter } from "./js/frameLimiter.js";
+import { FrameStats } from "./js/frameStats.js";
 import { buildColumns, lowerBound } from "./js/beatmap.js";
 import {
   DEFAULT_MODE_HIT_COLORS,
@@ -67,6 +68,7 @@ const FADE_START = 0.45;
 const root = document.querySelector("[data-root]");
 const keysRow = root.querySelector("[data-keys]");
 let canvas = root.querySelector("[data-canvas]");
+const fpsReadout = root.querySelector("[data-fps]");
 
 const settings = {
   visibility: "gameplay",
@@ -77,12 +79,14 @@ const settings = {
   showKeys: true,
   showNotes: true,
   maxLaneWidth: 64,
+  alignment: "center",
   // WebGPU presentation fails inside vosulay's CEF on NVIDIA/Linux (Dawn vkAllocateMemory
   // INVALID_EXTERNAL_HANDLE on every composite, GPU-process crash on teardown) and a single
   // instanced draw gains nothing from it, so WebGPU is opt-in.
   renderer: "webgl2",
   // 0 = draw on every animation frame the host offers.
   fpsLimit: 60,
+  showFps: false,
   colorText: {},
 };
 
@@ -247,7 +251,8 @@ function measure() {
   }
   const lanes = Math.max(1, laneCount);
   const laneCss = Math.min(settings.maxLaneWidth, rect.width / lanes);
-  const leftCss = (rect.width - laneCss * lanes) / 2;
+  const spareCss = rect.width - laneCss * lanes;
+  const leftCss = settings.alignment === "left" ? 0 : settings.alignment === "right" ? spareCss : spareCss / 2;
   const keyCss = settings.showKeys ? Math.round(Math.min(40, Math.max(24, laneCss * 0.62))) : 0;
   const gapCss = laneCss >= 30 ? 3 : 2;
   root.style.setProperty("--lanes", String(lanes));
@@ -350,17 +355,45 @@ function requestRender() {
 const limiter = new FrameLimiter();
 limiter.fps = settings.fpsLimit;
 
+const frameStats = new FrameStats();
+const frameSummary = { avg: 0, p95: 0, p99: 0 };
+const FPS_READOUT_INTERVAL_MS = 500;
+let fpsReadoutAt = Number.NEGATIVE_INFINITY;
+// Whether the gap to the next draw is a frame time: gameplay was on screen at the last draw and
+// had started moving. That holds even when the loop stopped because vosu's samples stalled (the
+// picture froze), but not across pauses, hidden periods, other screens or map loading.
+let drawChained = false;
+
 function renderFrame(timestamp) {
   raf = 0;
   // The backend can be torn down between frames (WebGPU falling back to WebGL2); the new one
   // requests its own render once ready.
-  if (!backend) return;
+  if (!backend) {
+    drawChained = false;
+    return;
+  }
   if (!limiter.shouldDraw(timestamp)) {
     raf = requestAnimationFrame(renderFrame);
     return;
   }
   draw(timestamp);
-  if (clock.isAdvancing() && !root.classList.contains("is-hidden")) requestRender();
+  const visible = !root.classList.contains("is-hidden");
+  if (settings.showFps) recordFrame(timestamp);
+  drawChained = visible && isPlaying() && (drawChained || clock.isAdvancing());
+  if (visible && clock.isAdvancing()) requestRender();
+}
+
+function recordFrame(timestamp) {
+  frameStats.frame(timestamp, drawChained && isPlaying());
+  if (timestamp - fpsReadoutAt < FPS_READOUT_INTERVAL_MS) return;
+  fpsReadoutAt = timestamp;
+  const summary = frameStats.summary(timestamp, frameSummary);
+  // The readout is DOM text, so it is rewritten only when it changes: every write makes the host
+  // compose a new frame.
+  const text = summary
+    ? `${summary.avg.toFixed(1)} avg · ${summary.p95.toFixed(1)} p95 · ${summary.p99.toFixed(1)} p99 fps`
+    : "— fps";
+  if (fpsReadout.textContent !== text) fpsReadout.textContent = text;
 }
 
 function pushSpan(t0, t1, now, lane, color, style, geometry) {
@@ -454,9 +487,18 @@ function applySettings(incoming) {
   settings.showKeys = bool(incoming.showKeys, settings.showKeys);
   settings.showNotes = bool(incoming.showNotes, settings.showNotes);
   settings.maxLaneWidth = num(incoming.maxLaneWidth, settings.maxLaneWidth, 8, 400);
+  if (["left", "center", "right"].includes(incoming.alignment)) settings.alignment = incoming.alignment;
   if (["webgl2", "webgpu"].includes(incoming.renderer)) settings.renderer = incoming.renderer;
   settings.fpsLimit = num(incoming.fpsLimit, settings.fpsLimit, 0, 1000);
   limiter.fps = settings.fpsLimit;
+  const showFps = bool(incoming.showFps, settings.showFps);
+  if (showFps !== settings.showFps) {
+    settings.showFps = showFps;
+    frameStats.clear();
+    fpsReadoutAt = Number.NEGATIVE_INFINITY;
+    fpsReadout.textContent = "— fps";
+    fpsReadout.hidden = !showFps;
+  }
   for (const [key, value] of Object.entries(incoming)) {
     if (/HitColors|NoteColors/.test(key) && typeof value === "string") settings.colorText[key] = value;
   }

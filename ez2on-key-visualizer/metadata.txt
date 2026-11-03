@@ -1,6 +1,6 @@
 Usecase: ingame,obs-overlay
 Name: EZ2ON Key Visualizer
-Version: 1.0.4
+Version: 1.0.5
 Author: sxlvia
 CompatibleWith: vosu
 Resolution: 480x720
