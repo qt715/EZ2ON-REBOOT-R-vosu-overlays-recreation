@@ -1,4 +1,5 @@
 import {
+  BeatmapFile,
   STATE_PLAYING,
   SettingsChannel,
   Subscription,
@@ -28,8 +29,6 @@ const POINTERS = [
   "/keys/all",
   "/play/mode/number",
   "/play/mods",
-  // The path arrives in the same snapshot as everything else. `/files/beatmap/file` would serve
-  // vosu's separately polled selection, which can still be the previous map right after a change.
   "/directPath/beatmapFile",
   "/settings/mania/scrollSpeed",
   "/settings/mania/scrollDirection/number",
@@ -104,9 +103,10 @@ let laneCount = 0;
 let keyNodes = [];
 let keyStates = [];
 
-let beatmapText = null;
-let beatmapPath = null;
-let beatmapRequest = 0;
+const beatmap = new BeatmapFile(() => {
+  resolveColumns();
+  requestRender();
+});
 let built = null; // { key, result } for the last map/mods combination
 let columns = null; // note columns after mods, or null when notes are not drawn
 
@@ -267,34 +267,15 @@ function measure() {
   view.keyBand = keyCss > 0 ? (keyCss + 2) * view.dpr : 0;
 }
 
-function loadBeatmap(path) {
-  beatmapPath = path;
-  beatmapText = null;
-  built = null;
-  columns = null;
-  if (!path) return;
-  const request = ++beatmapRequest;
-  const encoded = path.replaceAll("\\", "/").split("/").map(encodeURIComponent).join("/");
-  fetch(`/files/beatmap/${encoded}`)
-    .then((response) => (response.ok ? response.text() : ""))
-    .then((text) => {
-      if (request !== beatmapRequest) return;
-      beatmapText = text || null;
-      resolveColumns();
-      requestRender();
-    })
-    .catch(() => {});
-}
-
 function resolveColumns() {
   columns = null;
-  if (mode !== MODE_MANIA || !beatmapText) return;
+  if (mode !== MODE_MANIA || !beatmap.text) return;
   const mods = values[MODS];
   const key = JSON.stringify([mods?.number, mods?.array]);
   if (built?.key !== key) {
     let result = null;
     try {
-      result = buildColumns(beatmapText, mods);
+      result = buildColumns(beatmap.text, mods);
     } catch (error) {
       console.warn("Could not build mania notes", error);
     }
@@ -320,7 +301,10 @@ function onFrame(next, changed) {
     rate = Number.isFinite(nextRate) && nextRate > 0 ? nextRate : 1;
     resolveColumns();
   }
-  if (changed.has(BEATMAP_FILE) && values[BEATMAP_FILE] !== beatmapPath) loadBeatmap(values[BEATMAP_FILE]);
+  if (changed.has(BEATMAP_FILE) && beatmap.track(values[BEATMAP_FILE])) {
+    built = null;
+    columns = null;
+  }
 
   const keys = Array.isArray(values[KEYS]) ? values[KEYS] : [];
   const nextMode = values[MODE] ?? 0;

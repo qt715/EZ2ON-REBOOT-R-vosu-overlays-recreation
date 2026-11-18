@@ -1,6 +1,6 @@
 Usecase: ingame,obs-overlay
 Name: EZ2ON Play Information
-Version: 1.0.0
+Version: 1.0.5
 Author: sxlvia
 CompatibleWith: vosu
 Resolution: 780x150

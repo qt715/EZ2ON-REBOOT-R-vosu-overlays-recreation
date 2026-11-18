@@ -146,6 +146,40 @@ export class SettingsChannel {
   }
 }
 
+/**
+ * Text of the playing map's .osu file, served by vosu under `/files/beatmap/`. Track the path from
+ * `/directPath/beatmapFile`: it arrives in the same snapshot as everything else, whereas
+ * `/files/beatmap/file` follows vosu's separately polled selection and can lag a map change.
+ */
+export class BeatmapFile {
+  #path = null;
+  #request = 0;
+
+  constructor(onLoad) {
+    this.onLoad = onLoad;
+    this.text = null;
+  }
+
+  /** Starts loading `path` unless it is already tracked; returns whether the map changed. */
+  track(path) {
+    if (path === this.#path) return false;
+    this.#path = path;
+    this.text = null;
+    const request = ++this.#request;
+    if (!path) return true;
+    const encoded = path.replaceAll("\\", "/").split("/").map(encodeURIComponent).join("/");
+    fetch(`/files/beatmap/${encoded}`)
+      .then((response) => (response.ok ? response.text() : ""))
+      .then((text) => {
+        if (request !== this.#request) return;
+        this.text = text || null;
+        this.onLoad(this.text);
+      })
+      .catch(() => {});
+    return true;
+  }
+}
+
 export const STATE_PLAYING = 2;
 export const STATE_RESULTS = 7;
 

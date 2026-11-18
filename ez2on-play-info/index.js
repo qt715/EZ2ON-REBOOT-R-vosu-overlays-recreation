@@ -1,4 +1,5 @@
 import {
+  BeatmapFile,
   STATE_RESULTS,
   SettingsChannel,
   Subscription,
@@ -14,6 +15,7 @@ import {
   formatRate,
   judgeRate,
   judgementsFor,
+  usedManiaColumns,
 } from "./js/judgements.js";
 
 const POINTERS = [
@@ -29,10 +31,13 @@ const POINTERS = [
   "/beatmap/stats/cs/converted",
   "/beatmap/stats/objects",
   "/beatmap/stats/maxCombo",
+  "/directPath/beatmapFile",
   "/play/mode/number",
   "/play/hits",
+  "/play/mods",
   "/resultsScreen/mode/number",
   "/resultsScreen/hits",
+  "/resultsScreen/mods",
   "/settings/mode/number",
   "/client",
 ];
@@ -47,10 +52,13 @@ const [
   CS,
   OBJECTS,
   MAX_COMBO,
+  FILE,
   PLAY_MODE,
   PLAY_HITS,
+  PLAY_MODS,
   RESULT_MODE,
   RESULT_HITS,
+  RESULT_MODS,
   MENU_MODE,
   CLIENT,
 ] = POINTERS.keys();
@@ -78,6 +86,12 @@ let chipValues = [];
 let rateValue = null;
 let background = null;
 let lastValues = null;
+let usedColumns = null;
+
+const beatmap = new BeatmapFile((text) => {
+  usedColumns = usedManiaColumns(text);
+  if (lastValues) update(lastValues);
+});
 
 function chip(label, tone) {
   const item = document.createElement("li");
@@ -111,6 +125,7 @@ function activeMode(values, state) {
 
 function update(values) {
   lastValues = values;
+  if (beatmap.track(values[FILE])) usedColumns = null;
   const state = values[STATE] ?? -1;
   root.classList.toggle("is-hidden", !isVisibleIn(settings.visibility, state) || !values[TITLE]);
 
@@ -135,14 +150,18 @@ function update(values) {
   const keyCount = Math.round(values[CS] ?? 0);
   setText(keysNode, mode === MODE_MANIA && keyCount > 0 ? `${keyCount}K ` : "");
 
-  const hits = state === STATE_RESULTS ? values[RESULT_HITS] : state === STATE_PLAYING ? values[PLAY_HITS] : null;
+  const inResults = state === STATE_RESULTS;
+  const hits = inResults ? values[RESULT_HITS] : state === STATE_PLAYING ? values[PLAY_HITS] : null;
   for (let i = 0; i < judgements.length; i++) setText(chipValues[i], String(countOf(hits, judgements[i])));
-  const expected = expectedJudgements(mode, {
+  const play = {
     objects: values[OBJECTS],
     maxCombo: values[MAX_COMBO],
     client: values[CLIENT],
-  });
-  setText(rateValue, formatRate(judgeRate(mode, hits, expected)));
+    mods: inResults ? values[RESULT_MODS] : values[PLAY_MODS],
+    keys: values[CS],
+    usedColumns,
+  };
+  setText(rateValue, formatRate(judgeRate(mode, hits, expectedJudgements(mode, play), play)));
 }
 
 function applySettings(incoming) {

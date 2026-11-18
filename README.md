@@ -10,7 +10,7 @@ Each overlay is its own folder, so you can install only the ones you want.
 
 | Overlay | Preview |
 | --- | --- |
-| **EZ2ON Judge Rate** (`ez2on-judge-rate`, 240×64)<br>Accuracy over the whole map: starts at 0% and only reaches 100% when every object gets the best judgement. | ![Judge rate](docs/previews/judge-rate.png) |
+| **EZ2ON Judge Rate** (`ez2on-judge-rate`, 240×64)<br>Accuracy over the whole map: starts at 0% and only reaches 100% when every object gets a judgement worth full accuracy. In mania it ends at the accuracy the game shows, on stable (with or without ScoreV2) and on lazer, and it counts the notes lazer's Hold Off and Invert mods produce. Catch leaves small droplets out of the rate. | ![Judge rate](docs/previews/judge-rate.png) |
 | **EZ2ON Judgement Counts** (`ez2on-judgement-counts`, 500×56)<br>Judgement counts with osu! names: 320 300 200 100 50 0 in mania, 300 100 50 0 in standard, 300 100 0 in taiko, 300 0 in catch. | ![Judgement counts](docs/previews/judgement-counts.png) |
 | **EZ2ON Judgement Popup** (`ez2on-judgement-popup`, 500×150)<br>The big judgement text on every hit. Resize the overlay to resize the text. | ![Judgement popup](docs/previews/judgement-popup.png) |
 | **EZ2ON Timing Bar** (`ez2on-timing-bar`, 500×90)<br>Hit offsets coloured by judgement, with an average marker. EARLY pops up on the left and LATE on the right; both colours are configurable. | ![Timing bar, late](docs/previews/timing-bar.png)<br>![Timing bar, early](docs/previews/timing-bar-early.png) |
@@ -43,6 +43,7 @@ To update, download the new release and replace the folders. Your settings are s
 
 Open an overlay's settings from the vosu dashboard. Every overlay has a **Visibility** setting (gameplay only, gameplay and results, or always). Other notable settings:
 
+- **Judge Rate:** what it shows: the EZ2ON judge rate (default) or the accuracy vosu reports, the same number osu! shows.
 - **Timing Bar:** EARLY / LATE colours, EARLY / LATE threshold, how long hits stay on the bar.
 - **Key Visualizer:** scroll direction and speed (`auto` follows your osu! mania settings), fading, key boxes, note and press colours per key count, an input offset, a frame rate limit (60 fps by default; `0` redraws on every frame), and a debug frame rate readout (average, 95th and 99th percentile fps over the last 10 seconds of gameplay).
 - **Play Information:** background dim, unicode titles.

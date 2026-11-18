@@ -10,5 +10,16 @@
       "always"
     ],
     "value": "gameplay"
+  },
+  {
+    "uniqueID": "value",
+    "type": "options",
+    "title": "Value",
+    "description": "What the overlay shows: the EZ2ON judge rate (accuracy over the whole map, starts at 0%) or the accuracy vosu reports (accuracy over the notes judged so far, as osu! shows it)",
+    "options": [
+      "judge rate",
+      "vosu accuracy"
+    ],
+    "value": "judge rate"
   }
 ]
